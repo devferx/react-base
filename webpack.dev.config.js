@@ -26,7 +26,13 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: [{
+          loader: 'babel-loader',
+          options: {
+            presets: [require.resolve('@babel/preset-env'), require.resolve('@babel/preset-react')],
+            plugins: [require.resolve('react-refresh/babel')]
+          }
+        }]
       },
       {
         test: /\.html$/,
