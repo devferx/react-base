@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -9,6 +10,13 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
+  },
+  devServer: {
+    port: 3000,
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    hot: true,
+    open: true
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -18,13 +26,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            presets: [require.resolve('@babel/preset-env'), require.resolve('@babel/preset-react')],
-            plugins: [require.resolve('react-refresh/babel')]
-          }
-        }]
+        use: ['babel-loader']
       },
       {
         test: /\.html$/,
@@ -34,7 +36,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          MiniCssExtractPlugin.loader,
+          'css-loader',
         ],
       },
     ]
@@ -43,6 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new MiniCssExtractPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin()
   ]
 }

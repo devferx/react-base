@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 const App = () => {
   return (
     <div>
-      <h1>Hola desde App!</h1>
+      <h1>Hola desde mi app!</h1>
     </div>
   )
 }
